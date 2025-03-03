@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from 'react';
 import './page.css';
-import { Box, Typography, Grid2 } from '@mui/material';
+import { Box, Typography, Stack } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import retrieveCoins from './api/fetch/route';
 import CoinBlock from './components/coin-block/coin-block';
@@ -38,7 +38,7 @@ export default function Home() {
           {isLoading ? 'Loading...' : 'Refresh Coins'}
         </Typography>
       </button>
-      <Box className='coin-grid'>
+      <Stack className='coin-grid'>
        {coins.map((coin, index) => (
           <CoinBlock
             key={index}
@@ -48,7 +48,7 @@ export default function Home() {
             volume={coin.volumeUsd24Hr}
           />
         ))}
-      </Box>
+      </Stack>
       <br/>
     </Box>
   );

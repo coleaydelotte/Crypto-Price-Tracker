@@ -6,14 +6,19 @@
     min-height: 100vh;
     text-align: center;
     width: 100vw;
+    gap: 1em;
 }
 
 .coin-grid {
-    display: grid;
+    display: flex;
     grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));
     gap: 2em;
     padding: 2em;
-    width: 80vw;
+    width: 86vw;
+    border: 2px solid rgba(240, 46, 170, 1);
+    justify-content: center;
+    align-items: center;
+    border-radius: 2em;
 }
 
 .refresh-button {
@@ -25,4 +30,7 @@
     border-radius: 0.5em;
     background-color: rgb(0, 0, 0);
     box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
+    color: white;
+    padding: 1;
 }
+

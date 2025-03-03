@@ -14,4 +14,4 @@ export default async function retrieveCoins() {
         console.error("Error fetching coins:", error);
         throw error;
     }
-}
+s}
