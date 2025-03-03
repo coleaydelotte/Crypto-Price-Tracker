@@ -34,3 +34,19 @@
     padding: 1;
 }
 
+.error-msg {
+    color: red;
+    font-size: 15em;
+    z-index: 100;
+}
+
+.header {
+    font-family: monospace;
+    font-size: 3vw;
+    font-weight: 700;
+    color: white;
+    border: 2px solid rgba(240, 46, 170, 1);
+    border-radius: 1em;
+    width: 86vw;
+}
+

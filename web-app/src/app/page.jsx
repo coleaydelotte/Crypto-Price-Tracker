@@ -9,6 +9,7 @@ import CoinBlock from './components/coin-block/coin-block';
 export default function Home() {
 
   const [coins, setCoins] = useState([]);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const fetchCoins = async () => {
     console.log('Fetching coins...');
@@ -20,19 +21,29 @@ export default function Home() {
   });
 
   useEffect(() => {
+    if (error) {
+      setErrorMsg(error.message);
+    }
+  }, [error]);
+
+  useEffect(() => {
     document.body.style.cursor = isLoading ? 'wait' : 'default';
   }, [isLoading]);
 
   useEffect(() => {
     if (data) {
-      setCoins(data.data);
+      const dataObj = data.data.slice(0, 5);
+      setCoins(dataObj);
     }
   }
   , [data]);
 
   return (
     <Box className='main'>
-      <h1>Welcome to the Coin Tracker App!</h1>
+      {errorMsg && <h1 className={"error-msg"}>{errorMsg}</h1>}
+      <a className='header' fontFamily={'monospace'}>
+        Welcome to the Coin Tracker App!
+      </a>
       <button className={"refresh-button"} onClick={fetchCoins} disabled={isLoading}>
         <Typography fontFamily={'monospace'} fontSize={20} fontWeight={700}>
           {isLoading ? 'Loading...' : 'Refresh Coins'}
