@@ -2,20 +2,22 @@
 import { useEffect, useState } from 'react';
 import './page.css';
 import { Box, Typography } from '@mui/material';
-const axios = require('axios');
+import { useQuery } from '@tanstack/react-query';
+import retrieveCoins from './api/fetch/route';
+import CoinBlock from './components/coin-block/coin-block';
 
 export default function Home() {
 
-  const [isLoading, setIsLoading] = useState(false);
   const [coins, setCoins] = useState([]);
 
   const fetchCoins = async () => {
-    setIsLoading(true);
-    const response = await fetch('/api/coins');
-    const data = await response.json();
-    setCoins(data);
-    setIsLoading(false);
+    console.log('Fetching coins...');
   }
+
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['coins'],
+    queryFn: retrieveCoins,
+  });
 
   useEffect(() => {
     document.body.style.cursor = isLoading ? 'wait' : 'default';
@@ -23,17 +25,23 @@ export default function Home() {
 
   return (
     <Box className='main'>
-      <Typography>
-        <h1>Welcome to the Coin Tracker App!</h1>
-        <button onClick={fetchCoins} disabled={isLoading}>
-          {isLoading ? 'Loading...' : 'Fetch Coins'}
-        </button>
-        <ul>
-          {coins.map((coin, index) => (
-            <li key={index}>{coin.name} - ${coin.price}</li>
-          ))}
-        </ul>
-      </Typography>
+      <h1>Welcome to the Coin Tracker App!</h1>
+      <button onClick={fetchCoins} disabled={isLoading}>
+        {isLoading ? 'Loading...' : 'Fetch Coins'}
+      </button>
+      <ul>
+        {coins.map((coin, index) => (
+          <li key={index}>{coin.name} - ${coin.price}</li>
+        ))}
+      </ul>
+      <br/>
+      <CoinBlock
+        name="Bitcoin"
+        price="50000"
+        marketCap="900B"
+        volume="50B"
+      />
+      {console.log(data)}
     </Box>
   );
 }
