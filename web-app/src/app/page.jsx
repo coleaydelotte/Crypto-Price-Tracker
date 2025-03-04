@@ -70,7 +70,7 @@ export default function Home() {
         label="Filter Coin Names"
         variant="outlined"
         onChange={(e) => setFilterState(e.target.value)}
-        sx={{
+        sx={{ // MUI styling ik its really ugly
           "& label": { color: "rgb(255, 255, 255)" },
           "& label.Mui-focused": { color: "rgb(255, 255, 255)" },
           "& .MuiOutlinedInput-root": {
