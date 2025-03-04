@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from 'react';
 import './page.css';
-import { Box, Typography, Stack, Modal } from '@mui/material';
+import { Box, Typography, Stack, Modal, TextField } from '@mui/material';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import retrieveCoins from './api/fetch/route';
 import CoinBlock from './components/coin-block/coin-block';
@@ -10,12 +10,11 @@ import LoadingModal from './components/loading-modal/loading-modal';
 export default function Home() {
 
   const [coins, setCoins] = useState([]);
-  const [errorMsg, setErrorMsg] = useState(null);
-
+  const [errorMsg, setErrorMsg] = useState("");
+  const [filterState, setFilterState] = useState("");
   const queryClient = useQueryClient();
 
   const fetchCoins = async () => {
-    console.log('Fetching coins...');
     queryClient.invalidateQueries(['coins']);
   }
 
@@ -32,10 +31,6 @@ export default function Home() {
   }, [error]);
 
   useEffect(() => {
-    console.log('Loading state:', isFetching);
-  }, [isFetching]);
-
-  useEffect(() => {
     if (data) {
       const dataObj = data.data.slice(0, 5);
       setCoins(dataObj);
@@ -43,9 +38,13 @@ export default function Home() {
   }
   , [data]);
 
+  const filteredCoins = coins.filter((coin) =>
+    coin.name.toLowerCase().includes(filterState.toLowerCase())
+  );
+
   return (
     <Box className='main'>
-      {errorMsg && <h1 className={"error-msg"}>{errorMsg}</h1>}
+      <Modal open={errorMsg}><h1 className={"error-msg"}>Error: {errorMsg}</h1></Modal>
       <LoadingModal open={isFetching} sx={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}/>
       <a className='header' fontFamily={'monospace'}>
         Welcome to the Coin Tracker App!
@@ -56,7 +55,7 @@ export default function Home() {
         </Typography>
       </button>
       <Stack className='coin-grid'>
-       {coins.map((coin, index) => (
+       {filteredCoins.map((coin, index) => (
           <CoinBlock
             key={index}
             name={coin.name}
@@ -66,6 +65,26 @@ export default function Home() {
           />
         ))}
       </Stack>
+      <TextField
+        className='text-field'
+        label="Filter Coin Names"
+        variant="outlined"
+        onChange={(e) => setFilterState(e.target.value)}
+        sx={{
+          "& label": { color: "rgb(255, 255, 255)" },
+          "& label.Mui-focused": { color: "rgb(255, 255, 255)" },
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": { borderColor: "rgba(240, 46, 170, 1)" },
+            "&:hover fieldset": { borderColor: "rgba(240, 46, 170, 1)" },
+            "&.Mui-focused fieldset": { borderColor: "rgba(240, 46, 170, 1)" },
+          },
+          "& .MuiInputBase-input": {
+            color: "rgb(255, 255, 255)",
+            caretColor: "rgb(255, 255, 255)",
+            fontWeight: "bold",
+          }
+        }}
+      />
       <br/>
     </Box>
   );
