@@ -6,7 +6,7 @@ export default async function retrieveCoins(retries = 3, delay = 1000) {
         });
     
         if (!response.ok) {
-            if (response.status === 429) {
+            if (response.status === 429 && retries > 0) {
                 console.warn("Rate limit exceeded. Retrying in", delay / 1000, "seconds...");
                 await new Promise(resolve => setTimeout(resolve, delay));
                 return retrieveCoins(retries - 1, delay * 2);
