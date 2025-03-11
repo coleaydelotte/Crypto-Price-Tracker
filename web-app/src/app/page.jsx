@@ -46,9 +46,9 @@ export default function Home() {
     <Box className='main'>
       <Modal open={errorMsg}><h1 className={"error-msg"}>Error: {errorMsg}</h1></Modal>
       <LoadingModal open={isFetching} sx={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}/>
-      <a className='header' fontFamily={'monospace'}>
+      {/* <a className='header' fontFamily={'monospace'}>
         Welcome to the Coin Tracker App!
-      </a>
+      </a> */}
       <button className={"refresh-button"} onClick={fetchCoins} disabled={isFetching}>
         <Typography fontFamily={'monospace'} fontWeight={700}>
           {isLoading ? 'Loading...' : 'Refresh Coins'}
@@ -70,7 +70,7 @@ export default function Home() {
         label="Filter Coin Names"
         variant="outlined"
         onChange={(e) => setFilterState(e.target.value)}
-        sx={{ // MUI styling ik its really ugly
+        sx={{ // MUI styling, ik its really ugly
           "& label": { color: "rgb(255, 255, 255)" },
           "& label.Mui-focused": { color: "rgb(255, 255, 255)" },
           "& .MuiOutlinedInput-root": {
