@@ -37,7 +37,7 @@ export default function Home() {
     }
   }
   , [data]);
-
+  
   const filteredCoins = coins.filter((coin) =>
     coin.name.toLowerCase().includes(filterState.toLowerCase())
   );
@@ -46,9 +46,6 @@ export default function Home() {
     <Box className='main'>
       <Modal open={errorMsg}><h1 className={"error-msg"}>Error: {errorMsg}</h1></Modal>
       <LoadingModal open={isFetching} sx={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}/>
-      {/* <a className='header' fontFamily={'monospace'}>
-        Welcome to the Coin Tracker App!
-      </a> */}
       <button className={"refresh-button"} onClick={fetchCoins} disabled={isFetching}>
         <Typography fontFamily={'monospace'} fontWeight={700}>
           {isLoading ? 'Loading...' : 'Refresh Coins'}
