@@ -1,3 +1,5 @@
+# Crypto-Price-Tracker
+
 # Running the Next.js App
 First you are going to need to change your present working directory to `web-app` so execute the following command:
 ```bash
